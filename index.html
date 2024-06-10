@@ -88,7 +88,7 @@
             </div>
           </div>
           <div class="sm:col-span-2 sm:flex sm:justify-end">
-            <button type="submit" class="mt-2 inline-flex w-full items-center justify-center rounded-md border border-transparent bg-teal-500 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:w-auto">
+            <button type="button" class="mt-2 inline-flex w-full items-center justify-center rounded-md border border-transparent bg-teal-500 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:w-auto">
               Envoyer
             </button>
           </div>
@@ -96,5 +96,92 @@
       </div>
     </div>
   </div>
+  <script>
+    //Variables declaration
+    let button = document.querySelector("button");
+    let firstNameInput;
+    let lastNameInput;
+    let fullNameText;
+    let commentInput;
+    let commentText;
+    let firstDiv;
+    let secondDiv;
+    let h3;
+    let paragraphDiv;
+    let paragraph;
+
+    //User comment submission
+    button.addEventListener('click', function() {
+      getInputContent();
+
+      //Checking validity of the fields
+      if (firstNameInput.value == "" || lastNameInput.value == "" || commentInput.value == "") {
+        displayErrorMessage();
+      } else {
+        createNewElements ();
+        addInputContentInNewElements ();
+        addClassToNewElements ();
+        addNewElementsToTheWebPage ();
+        deleteInputContentOnWebPage ();
+        deleteErrorMessage ();
+      }
+    });
+
+    // Methods
+
+    function displayErrorMessage () {
+      let errorDiv = document.getElementById("error-message");
+      errorDiv.style.display = "flex";
+    };
+
+    function getInputContent () {
+      firstNameInput = document.getElementById("first-name");
+      lastNameInput = document.getElementById("last-name");
+      fullNameText = document.createTextNode(firstNameInput.value + " " + lastNameInput.value);
+
+      commentInput = document.getElementById("message");
+      commentText = document.createTextNode(commentInput.value);
+    };
+
+    function createNewElements () {
+      firstDiv = document.createElement("div");
+      secondDiv = document.createElement("div");
+      h3 = document.createElement("h3");
+      paragraphDiv = document.createElement("div");
+      paragraph = document.createElement("p");
+    };
+
+    function addInputContentInNewElements () {
+      paragraph.appendChild(commentText);
+      paragraphDiv.appendChild(paragraph);
+      h3.appendChild(fullNameText);
+      secondDiv.append(h3, paragraphDiv);
+      firstDiv.appendChild(secondDiv);
+    };
+
+    function addClassToNewElements () {
+      firstDiv.classList.add("flex", "space-x-4", "text-sm", "text-gray-500");
+      secondDiv.classList.add("flex-1", "py-10", "border-t", "border-gray-200");
+      h3.classList.add("font-medium", "text-gray-900");
+      paragraphDiv.classList.add("prose", "prose-sm", "mt-4", "max-w-none", "text-gray-500");
+    };
+
+    function addNewElementsToTheWebPage () {
+      let commentList = document.getElementById("comment-list");
+      commentList.appendChild(firstDiv);
+    };
+
+    function deleteInputContentOnWebPage () {
+      firstNameInput.value = "";
+      lastNameInput.value = "";
+      commentInput.value = "";
+    };
+
+    function deleteErrorMessage () {
+      let errorDiv = document.getElementById("error-message");
+      errorDiv.style.display = "none";
+    };
+    
+  </script>
 </body>
 </html>
